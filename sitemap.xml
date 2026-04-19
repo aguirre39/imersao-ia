@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <!-- URL Principal (Home) -->
+    <url>
+        <loc>https://kahrosa.github.io/imersaoia/</loc>
+        <!-- Data da última modificação (você pode atualizar essa data quando fizer grandes mudanças) -->
+        <lastmod>2026-04-18T12:00:00+00:00</lastmod>
+        <!-- Frequência com que a página costuma receber atualizações -->
+        <changefreq>weekly</changefreq>
+        <!-- Prioridade máxima, já que é uma Single Page -->
+        <priority>1.0</priority>
+    </url>
+</urlset>
