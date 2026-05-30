@@ -56,15 +56,13 @@
     <!-- Fonts Otimizadas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
     <!-- Icons (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" media="print" onload="this.media='all'" />
+    <!-- Swiper CSS (Carregado dinamicamente via JS) -->
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" /></noscript>
 
     <!-- Tailwind CSS (Static) -->
@@ -72,6 +70,11 @@
     <link rel="stylesheet" href="tailwind_output.css">
 
     <style>
+        /* E-E-A-T & Core Web Vitals: FontAwesome Display Swap Override */
+        @font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2) format("woff2"); }
+        @font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 900; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2) format("woff2"); }
+        @font-face { font-family: 'Font Awesome 6 Brands'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2) format("woff2"); }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0c0a0d; }
@@ -979,9 +982,6 @@
         <i class="fa-brands fa-whatsapp relative z-10" aria-hidden="true"></i>
     </a>
 
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
-
     <!-- Scripts da Página -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -1016,10 +1016,23 @@
                 });
             });
 
-            // --- SWIPER CAROUSEL (CASES) ---
-            setTimeout(() => {
-                if (typeof Swiper !== 'undefined') {
-                    const swiper = new Swiper('.casesSwiper', {
+            // --- LAZY LOAD SWIPER CAROUSEL (CASES) ---
+            const swiperSection = document.querySelector('.casesSwiper');
+            let swiperLoaded = false;
+
+            const initSwiper = () => {
+                if(swiperLoaded) return;
+                swiperLoaded = true;
+                
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css';
+                document.head.appendChild(link);
+                
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js';
+                script.onload = () => {
+                    new Swiper('.casesSwiper', {
                         slidesPerView: 1,
                         spaceBetween: 20,
                         loop: true,
@@ -1033,28 +1046,42 @@
                             1280: { slidesPerView: 4, spaceBetween: 30 },
                         }
                     });
-                }
-            }, 500);
+                };
+                document.body.appendChild(script);
+            };
 
-            // --- COUNTER ANIMATION ---
+            if (swiperSection && 'IntersectionObserver' in window) {
+                const swiperObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        initSwiper();
+                        swiperObserver.disconnect();
+                    }
+                }, { rootMargin: '400px' });
+                swiperObserver.observe(swiperSection);
+            } else {
+                initSwiper();
+            }
+
+            // --- COUNTER ANIMATION (Optimized for Layout Thrashing) ---
             const counters = document.querySelectorAll('.counter');
             const speed = 200; 
 
             const animateCounters = () => {
                 counters.forEach(counter => {
-                    const updateCount = () => {
-                        const target = +counter.getAttribute('data-target');
-                        const count = +counter.innerText;
-                        const inc = target / speed;
+                    const target = +counter.getAttribute('data-target');
+                    let currentCount = 0;
+                    const inc = target / speed;
 
-                        if (count < target) {
-                            counter.innerText = Math.ceil(count + inc);
-                            setTimeout(updateCount, 15);
+                    const updateCount = () => {
+                        if (currentCount < target) {
+                            currentCount += inc;
+                            counter.innerText = Math.ceil(currentCount);
+                            requestAnimationFrame(updateCount);
                         } else {
                             counter.innerText = target;
                         }
                     };
-                    updateCount();
+                    requestAnimationFrame(updateCount);
                 });
             }
 
