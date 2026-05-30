@@ -71,6 +71,94 @@
     <link rel="preload" as="style" href="tailwind_output.css">
     <link rel="stylesheet" href="tailwind_output.css">
 
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0c0a0d; }
+        ::-webkit-scrollbar-thumb { background: #ff007f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #cc0066; }
+
+        /* General Utilities */
+        body { font-family: 'Montserrat', sans-serif; background-color: #ffffff; color: #0c0a0d; }
+        
+        .text-outline {
+            -webkit-text-stroke: 1.5px #ff007f;
+            color: transparent;
+        }
+
+        .title-underline-center::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #ff007f;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .title-underline-start::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #ff007f;
+            margin: 10px 0 0;
+            border-radius: 2px;
+        }
+
+        /* EFEITOS AVANÇADOS DE HEADER E NEON */
+        .header-base {
+            background-color: #0c0a0d;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .header-scrolled {
+            background-color: rgba(12, 10, 13, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 0, 127, 0.15);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9);
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
+        }
+
+        @keyframes neon-pulse-glow {
+            0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.9); filter: blur(30px); }
+            50% { opacity: 0.40; transform: translate(-50%, -50%) scale(1.1); filter: blur(40px); }
+        }
+        
+        .animate-neon-glow {
+            animation: neon-pulse-glow 4s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        /* Hover Effects */
+        .mosaic-item img { transition: transform 0.7s ease; }
+        .mosaic-item:hover img { transform: scale(1.08); }
+        
+        .case-card img { transition: transform 0.7s ease; }
+        .case-card:hover img { transform: scale(1.1); filter: grayscale(0) !important; }
+
+        /* Custom Navigation Arrows */
+        .swiper-button-next, .swiper-button-prev {
+            color: #ff007f !important;
+            background-color: #0c0a0d;
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            margin-top: -40px; 
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background-color: #ff007f;
+            color: #ffffff !important;
+            transform: scale(1.1);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after { font-size: 18px !important; font-weight: 900; }
+        @media (max-width: 768px) { .swiper-button-next, .swiper-button-prev { display: none !important; } }
+    </style>
+
      <!-- OTIMIZAÇÃO SEO E-E-A-T E AIO: Schema Markup -->
     <script type="application/ld+json">
     {
