@@ -26,7 +26,7 @@
     <meta name="ICBM" content="-30.0346, -51.2177">
 
     <!-- OTIMIZAÇÃO DE PERFORMANCE (LCP e DNS): Preload e Prefetch -->
-    <link rel="preload" as="image" href="img/agencia-inteligencia-artificial-design-redes-sociais-porto-alegre.webp" type="image/webp">
+    <link rel="preload" as="image" href="img/agencia-inteligencia-artificial-design-redes-sociais-porto-alegre.webp" type="image/webp" fetchpriority="high">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.clarity.ms">
 
@@ -56,7 +56,9 @@
     <!-- Fonts Otimizadas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800;900&display=optional">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800;900&display=optional" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800;900&display=optional"></noscript>
 
     <!-- Icons (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -82,7 +84,7 @@
         ::-webkit-scrollbar-thumb:hover { background: #cc0066; }
 
         /* General Utilities */
-        body { font-family: 'Montserrat', sans-serif; background-color: #ffffff; color: #0c0a0d; }
+        body { font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #ffffff; color: #0c0a0d; }
         
         .text-outline {
             -webkit-text-stroke: 1.5px #ff007f;
