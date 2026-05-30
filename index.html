@@ -998,7 +998,7 @@
                     header.classList.remove('header-scrolled');
                     header.classList.add('header-base', 'py-2', 'md:py-4');
                 }
-            });
+            }, { passive: true });
 
             // --- MOBILE MENU TOGGLE ---
             const menuBtn = document.getElementById('menu-btn');
@@ -1113,12 +1113,17 @@
                 modalImg.src = src;
                 modalImg.alt = alt;
                 modal.classList.remove('hidden');
-                void modal.offsetWidth; 
-                modal.classList.remove('opacity-0');
-                modalImg.classList.remove('scale-95');
-                modalImg.classList.add('scale-100');
-                document.body.style.overflow = 'hidden'; 
-                closeModalBtn.focus();
+                
+                // Previne o Reflow Forçado agendando a animação para o próximo frame
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        modal.classList.remove('opacity-0');
+                        modalImg.classList.remove('scale-95');
+                        modalImg.classList.add('scale-100');
+                        document.body.style.overflow = 'hidden'; 
+                        closeModalBtn.focus();
+                    });
+                });
             };
 
             const closeModal = () => {
